@@ -1,0 +1,12 @@
+<p><small class="font-weight-bold">Reservaciones por hotel</small></p>
+<div class="border border-success" *ngIf="barChartData[0].data.length != 0; else noData">
+    <div>
+        <div style="display: block">
+            <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" [colors]="barChartColor">
+        </canvas>
+        </div>
+    </div>
+</div>
+<ng-template #noData>
+    <p class="text-muted">No existen datos suficientes para generar grafica de barras</p>
+</ng-template>

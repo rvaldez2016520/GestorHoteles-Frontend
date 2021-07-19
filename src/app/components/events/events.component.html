@@ -1,0 +1,172 @@
+<div class="main p-4">
+    <div class="container">
+        <div class="jumbotron jumbotron-fluid bg-success text-light rounded p-4 d-flex">
+            <button *ngIf="role == 'ROLE_CLIENT'" class="btn btn-outline-light" routerLink="/homeHotels"><i class="bi bi-arrow-90deg-left "></i></button>
+            <div class="container">
+                <h1 class="display-4 font-weight-bolder">Eventos</h1>
+                <p class="lead">En esta sección puedes administrar todos los eventos del hotel <span class="font-weight-bolder">{{ hotel.name }}</span>.</p>
+                <button *ngIf="role != 'ROLE_CLIENT'" class="btn btn-lg btn-outline-light text-uppercase" data-toggle="modal" data-target="#createEvent" (click)="deleteInfo()">Crear Evento</button>
+            </div>
+        </div>
+        <div class="alert alert-success center" role="alert">Eventos del hotel</div>
+        <div class="overflow-auto maxheight">
+            <div class="card events shadow-sm" *ngFor="let event of events">
+                <div class="card-body minheight">
+                    <h5 class="card-title font-weight-bolder"> {{ event.name }} </h5>
+                    <p class="card-text"><strong>Precio: </strong> ${{ event.price_event}} </p>
+                    <p class="card-text" *ngIf="event.type_of_event == 'Private'"><strong>Tipo: </strong>Privado</p>
+                    <p class="card-text" *ngIf="event.type_of_event == 'Public'"><strong>Tipo: </strong>Público</p>
+                    <a *ngIf="role != 'ROLE_CLIENT'" class="btn btn-primary mb-2" data-toggle="modal" data-target="#updateEvent" (click)="setEvent(event)">Actualizar Evento</a>
+                    <a *ngIf="role != 'ROLE_CLIENT'" class="btn btn-danger mb-2" data-toggle="modal" data-target="#deleteEvent" (click)="setEvent(event)">Eliminar</a>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="role != 'ROLE_CLIENT'" class="alert alert-success center" role="alert">Salones de eventos</div>
+        <div *ngIf="role != 'ROLE_CLIENT'" class="overflow-auto maxheight">
+            <div class="card events shadow-sm" *ngFor="let room of roomsEvent">
+                <div class="card-body minheight">
+                    <h5 class="card-title font-weight-bolder"> {{ room.name }} </h5>
+                    <p class="card-text"><strong>Precio: </strong> ${{ room.price_for_day }} </p>
+                    <a class="btn btn-primary mb-2" data-toggle="modal" data-target="#detailRoom" (click)="setRoom(room)">Detalle Salón</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Crear Evento -->
+<div class="modal fade" id="createEvent" tabindex="-1" aria-pledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Crear un Evento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <form #saveEventByAdminForm="ngForm" (ngSubmit)="onSubmit(saveEventByAdminForm)">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputName">Nombre del Evento</label>
+                            <input [(ngModel)]="event.name" name="name" type="text" class="form-control" id="inputName" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPrice">Precio por evento</label>
+                            <input [(ngModel)]="event.price_event" name="price" type="number" class="form-control" id="inputPrice" required>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label for="inputType">Elige el tipo de Evento</label>
+                        <select [(ngModel)]="event.type_of_event" name="type_of_event " id="inputTypeEvent " class="form-control " required>
+                            <option selected disabled>Elige un tipo de evento...</option>
+                            <option *ngFor="let typeEvent of typesEvent" [value]="typeEvent">{{ typeEvent }}</option> 
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" [disabled]="!saveEventByAdminForm.form.valid">Crear</button><br>
+                    <button type="submit" class="btn btn-danger btn-block" data-dismiss="modal">Cancelar</button>
+                </form>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal" (click)="ngOnInit()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Actualizar Evento -->
+<div class="modal fade" id="updateEvent" tabindex="-1" aria-pledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Actualizar Evento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <form #updateEventByAdminForm="ngForm" (ngSubmit)="updateEvent(updateEventByAdminForm)">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputNameU">Nombre del Evento</label>
+                            <input [(ngModel)]="event.name" name="name" type="text" class="form-control" id="inputNameU" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPriceU">Precio por evento</label>
+                            <input [(ngModel)]="event.price_event" name="price" type="number" class="form-control" id="inputPriceU" required>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label for="inputType">Elige el tipo de Evento</label>
+                        <select [(ngModel)]="event.type_of_event" name="type_of_event " id="inputTypeEventU " class="form-control " required>
+                            <option disabled>Elige un tipo de evento...</option>
+                            <option *ngFor="let typeEvent of typesEvent" [value]="typeEvent">{{ typeEvent }}</option> 
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" [disabled]="!updateEventByAdminForm.form.valid" (click)="ngOnInit()">Actualizar</button><br>
+                    <button type="submit" class="btn btn-danger btn-block" data-dismiss="modal">Cancelar</button>
+                </form>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Detalle Habitación -->
+<div class="modal fade" id="detailRoom" tabindex="-1" aria-pledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Información Detallada</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+
+                <p>Hotel: <strong>{{ hotel.name }}</strong> </p>
+                <br>
+                <p>Nombre de salón: <strong>{{ room.name }}</strong> </p>
+                <br>
+                <p>Precio por día: <strong>${{ room.price_for_day }} </strong></p>
+                <br>
+                <p *ngIf="room.available == true">Estado: <strong> Disponible </strong> </p>
+                <p *ngIf="room.available == false">Estado: <strong> Disponible hasta {{ showDateInFormat(room.available_day) }} </strong> </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Eliminar Evento -->
+<div class="modal fade" id="deleteEvent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">¿Estás seguro de eliminar este evento?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <h3>¡Esta acción no se puede remover!</h3>
+                <span>Ingresa tu contraseña para confirmar</span>
+                <form #formRemove="ngForm"></form>
+                <label for="passwordRemove"></label>
+                <input [(ngModel)]="confirmPassword" type="password" name="confirmPassword" id="passwordRemove" required>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning" (click)="removeEvent()" data-dismiss="modal" [disabled]="!formRemove.form.valid">I'm Sure</button>
+            </div>
+        </div>
+    </div>
+</div>

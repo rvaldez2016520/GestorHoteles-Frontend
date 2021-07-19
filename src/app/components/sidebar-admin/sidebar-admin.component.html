@@ -1,0 +1,45 @@
+<div *ngIf="role != 'ROLE_CLIENT' && token != null" class="sidbar-admin bg-custom p-4 text-light text-center d-flex flex-column justify-content-between align-items-center">
+
+    <div>
+        <img class="logo rounded" src="../../../assets/img/logo_hoteles.jpeg" alt="img ...">
+        <h2 class="font-weight-bolder text-monospace"> {{ user.username }} </h2>
+    </div>
+
+    <nav id="list-example" class="list-group">
+        <ul class="nav flex-column text-white">
+            <li class="nav-item">
+                <a class="nav-link" routerLink="/homeAdmin">Dashboard</a>
+            </li>
+            <li class="nav-item" *ngIf="role == 'ROLE_HOTEL'">
+                <a class="nav-link" routerLink="/reservations">Reservaciones</a>
+            </li>
+            <li class="nav-item" *ngIf="role == 'ROLE_HOTEL'">
+                <a class="nav-link" routerLink="/rooms">Habitaciones</a>
+            </li>
+            <li class="nav-item" *ngIf="role == 'ROLE_ADMIN'">
+                <a class="nav-link" routerLink="/users">Usuarios</a>
+            </li>
+            <li class="nav-item" *ngIf="role == 'ROLE_ADMIN'">
+                <a class="nav-link" routerLink="/homeHotels">Hoteles</a>
+            </li>
+            <li class="nav-item" *ngIf="role == 'ROLE_HOTEL'">
+                <a class="nav-link" routerLink="/hotelService">Servicios</a>
+            </li>
+            <li class="nav-item" *ngIf="role == 'ROLE_HOTEL'">
+                <a class="nav-link" routerLink="/events">Eventos</a>
+            </li>
+            <li class="nav-item" *ngIf="role == 'ROLE_HOTEL'">
+                <a class="nav-link" routerLink="/invoices">Facturas</a>
+            </li>
+        </ul>
+    </nav>
+
+    <footer>
+        <button type="button" class="btn btn-outline-light" (click)="logOut()">
+            Cerrar sesion
+        </button>
+        <button type="button" class="btn btn-outline-light ml-4" routerLink="/myaccount">
+            <i class="bi bi-sliders"></i>
+        </button>
+    </footer>
+</div>

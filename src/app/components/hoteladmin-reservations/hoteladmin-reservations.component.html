@@ -1,0 +1,89 @@
+<div class="main p-4">
+    <div class="container">
+        <div class="jumbotron jumbotron-fluid bg-info text-light rounded p-4">
+            <div class="container">
+                <h1 class="display-4 font-weight-bolder">Reservaciones</h1>
+                <p class="lead">En esta sección puedes administrar todas las reservaciones del hotel <span class="font-weight-bolder">{{ hotel.name }}</span>.</p>
+            </div>
+        </div>
+        <div class="overflow-auto maxheight">
+            <div class="card reservations shadow-sm" *ngFor="let reservation of reservations">
+                <!-- <img src="..." class="card-img-top" alt="..."> -->
+                <div class="card-body">
+                    <h5 class="card-title font-weight-bolder">{{ showUsername(reservation.user) }}</h5>
+                    <p class="card-text"><strong>Inicio: </strong> {{ showDateInFormat(reservation.start_date) }}</p>
+                    <p class="card-text"><strong>Fin: </strong> {{ showDateInFormat(reservation.end_date) }}</p>
+                    <p class="card-text" *ngIf="reservation.status == true"><strong>Estado: </strong>En proceso</p>
+                    <p class="card-text" *ngIf="reservation.status == false"><strong>Estado: </strong>Finalizada</p>
+                    <a class="btn btn-primary mb-2" data-toggle="modal" data-target="#staticBackdrop" (click)="setReservationInfo(reservation)">Detalle Reservación</a>
+                    <a class="btn btn-success" data-toggle="modal" data-target="#staticBackdropFacturar" (click)="setReservationInfo(reservation)">Facturar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Detalle Reservación -->
+<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-pledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Información Detallada</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+
+                <p>Usuario: <strong>{{ user.username }}</strong> </p>
+                <br>
+                <p>Hotel: <strong>{{ hotel.name }} </strong></p>
+                <br>
+                <p>Habitación: <strong> {{ room.name }} </strong> </p>
+                <br>
+                <p>Estadía: <strong> {{ showDateInFormat(reservation.start_date) }} - {{ showDateInFormat(reservation.end_date) }}</strong> </p>
+                <br>
+                <p>Precio: <strong> ${{ reservation.total_price }} </strong> </p>
+                <br>
+                <p *ngIf="reservation.status == true">Estado: <strong> En proceso </strong> </p>
+                <p *ngIf="reservation.status == false">Estado: <strong> Finalizada </strong> </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Facturación -->
+<div class="modal fade" id="staticBackdropFacturar" tabindex="-1" aria-pledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Información Detallada</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+
+                <p>Usuario: <strong>{{ user.username }}</strong> </p>
+                <br>
+                <p>Hotel: <strong>{{ hotel.name }} </strong></p>
+                <br>
+                <p>Habitación: <strong> {{ room.name }} </strong> </p>
+                <br>
+                <p>Estadía: <strong> {{ showDateInFormat(reservation.start_date) }} - {{ showDateInFormat(reservation.end_date) }}</strong> </p>
+                <br>
+                <p>Precio: <strong> ${{ reservation.total_price }} </strong> </p>
+                <br>
+                <p *ngIf="reservation.status == true">Estado: <strong> En proceso </strong> </p>
+                <p *ngIf="reservation.status == false">Estado: <strong> Finalizada </strong> </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success mb-2" (click)="createInvoice()">Facturar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

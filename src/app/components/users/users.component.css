@@ -1,0 +1,16 @@
+.main {
+    max-height: 100vh!important;
+    width: 85vw!important;
+    margin: 0 auto!important;
+    height: 100vh!important;
+}
+
+.maxheight {
+    max-height: 30rem;
+}
+
+.users {
+    width: 18rem;
+    display: inline-block!important;
+    margin: 1.25rem;
+}

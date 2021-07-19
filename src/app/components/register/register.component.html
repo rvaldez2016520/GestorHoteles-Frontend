@@ -1,0 +1,55 @@
+<body class="login text-center">
+    <div class="container m-4">
+        <form class="form-signin shadow-lg text-white" #register="ngForm" (ngSubmit)="onSubmit(register)">
+            <div *ngIf="message" class="alert alert-primary" role="alert">
+                {{message}}
+            </div>
+            <h1 class="h1"><strong>REGISTRARSE</strong></h1>
+            <img class="img-thumbnail rounded" id="logocuenta" src="../../../assets/img/logo_hoteles.jpeg" alt="img ...">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input [(ngModel)]="user.name" class="form-control" #name="ngModel" type="text" name="name" placeholder="Nombre" required>
+                    <span *ngIf="!name.valid && name.touched">
+                        Campo obligatorio 
+                    </span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="lastname" class="form-label">Apellido</label>
+                    <input [(ngModel)]="user.lastname" class="form-control" #lastname="ngModel" type="text" name="lastname" placeholder="Apellido" required>
+                    <span *ngIf="!lastname.valid && lastname.touched">
+                        Campo obligatorio 
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-3 shadow-sm">
+                <label for="username" class="form-label">Nombre de usuario</label>
+                <input [(ngModel)]="user.username" class="form-control" #username="ngModel" type="text" name="username" placeholder="Usuario" required>
+                <span *ngIf="!username.valid && username.touched">
+                    Campo obligatorio 
+                </span>
+            </div>
+            <div class="row mb-3 shadow-sm">
+                <label for="email" class="form-label">E-mail</label>
+                <input [(ngModel)]="user.email" class="form-control" #email="ngModel" type="text" name="email" placeholder="E-mail" required>
+                <span *ngIf="!email.valid && email.touched">
+                    Campo obligatorio 
+                </span>
+            </div>
+            <div class="row mb-3 shadow-sm">
+                <label for="password" class="form-label">Contrasena</label>
+                <input [(ngModel)]="user.password" class="form-control" #password="ngModel" type="password" name="password" placeholder="Contrasena" required>
+                <span *ngIf="!email.valid && email.touched">
+                    Campo obligatorio 
+                </span>
+            </div>
+            <div class="row mb-3">
+                <button class="btn btn-outline-light btn-block" type="submit" [disabled]="!register.form.valid">Crear una cuenta</button>
+            </div>
+        </form>
+    </div>
+    <div class="logo">
+        <img src="../../../assets/img/register.jpg" alt="">
+    </div>
+</body>

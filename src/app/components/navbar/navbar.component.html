@@ -1,0 +1,103 @@
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
+<nav *ngIf="role != 'ROLE_ADMIN'" class="navbar navbar-expand-lg  navbar-custom">
+    <div class="container-fluid">
+        <div class="logo">
+            <a class="navbar-brand" [routerLink]="['/']">
+                <img class="img-thumbnail rounded logo-navbar" src="./../../../assets/img/logo_hoteles.jpeg" alt="img ..."> Home
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <!-- <div class="input-group-lg">
+            <input class="form-control me-2 rounded-pill" type="search" placeholder="Japón, España, Perú..." aria-label="search">
+        </div> -->
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a *ngIf="token == null" class="nav-link" routerLink="/login" routerLinkActivate="active">Iniciar Sesión</a>
+                </li>
+                <li class="nav-item">
+                    <a *ngIf="token == null" class="nav-link" routerLink="/register">Registrarse</a>
+                </li>
+                <li class="nav-item">
+                    <a *ngIf="role == 'ROLE_ADMIN'" class="nav-link" routerLink="/users">Usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a *ngIf="role == 'ROLE_ADMIN' || role == 'ROLE_CLIENT'" class="nav-link" routerLink="/homeHotels">Hoteles</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a *ngIf="role == 'ROLE_ADMIN' || role == 'ROLE_CLIENT'" class="nav-link" routerLink="/home">Eventos</a>
+                </li> -->
+                <li class="nav-item">
+                    <a *ngIf="role == 'ROLE_ADMIN' || role == 'ROLE_CLIENT'" class="nav-link" routerLink="/history">Historial</a>
+                </li>
+                <li class="nav-item">
+                    <a *ngIf="role == 'ROLE_ADMIN' || role == 'ROLE_CLIENT'" class="nav-link" routerLink="/invoices">Facturas</a>
+                </li>
+                <li *ngIf="token != null" class="nav-item dropleft">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropleft" role="button" data-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-gear-fill"></i>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropleft">
+                        <li><a class="dropdown-item" routerLink="myaccount">Mi Cuenta</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" (click)="logOut()" id="liveToastBtn">Cerrar sesión</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- <button type="button" class="btn btn-primary" id="liveToastBtn">Show live toast</button> -->
+
+    <div class="position-fixed bottom-0 right-0 p-3" style="z-index: 5; right: 0; bottom: 0;">
+        <div id="liveToast" class="toast hide" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
+            <div class="toast-header">
+                <img src="..." class="rounded mr-2" alt="...">
+                <strong class="mr-auto">Bootstrap</strong>
+                <small>11 mins ago</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+            </div>
+            <div class="toast-body">
+                Hello, world! This is a toast message.
+            </div>
+        </div>
+    </div>
+
+</nav>
+<!-- 
+<div *ngIf="role != 'ROLE_CLIENT' && token != null" class="sidbar-admin bg-dark p-4 text-light text-center d-flex flex-column justify-content-between align-items-center">
+
+    <img class="logo rounded" src="../../../assets/img/logo_hoteles.jpeg" alt="img ...">
+
+    <nav id="list-example" class="list-group">
+        <ul class="nav flex-column text-white">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Dashboard</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Usuarios</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Hoteles</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Servicios</a>
+            </li>
+        </ul>
+    </nav>
+
+    <footer>
+        <button type="button" class="btn btn-outline-light" (click)="logOut()">
+            Cerrar sesion
+            
+        </button>
+        <button type="button" class="btn btn-outline-light ml-4">
+            <i class="bi bi-sliders"></i>
+        </button>
+    </footer>
+</div> -->

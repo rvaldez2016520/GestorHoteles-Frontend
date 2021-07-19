@@ -1,0 +1,39 @@
+body {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    padding-top: 40px;
+    padding-bottom: 10%;
+    background: url(../../../assets/img/fondouser.png) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+@media (min-width:768px) {
+    .bd-placeholder-img {
+        font-size: 3rem;
+    }
+}
+
+.form-signin {
+    width: 50vw;
+    max-width: 28rem;
+    margin: auto;
+    padding: 2rem 2rem;
+    font-family: 'Oswald', sans-serif;
+    color: white;
+    border-radius: 5%;
+    background: rgb(131, 58, 180);
+    background: linear-gradient(90deg, rgba(131, 58, 180, 1) 0%, rgba(253, 29, 29, 1) 50%, rgba(252, 176, 69, 1) 100%);
+    opacity: .8;
+}
+
+.form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 15px;
+}

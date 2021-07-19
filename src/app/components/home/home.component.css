@@ -1,0 +1,39 @@
+img {
+    height: 80vh;
+}
+
+.caruimg div {
+    height: 10rem;
+}
+
+.caruimg div img {
+    height: 10rem;
+    width: 10rem;
+}
+
+.divimg {
+    width: 80vw;
+}
+
+.hotelsHome {
+    width: 18rem;
+    display: inline-block!important;
+    margin: 1.25rem;
+}
+
+.widthmincarrousel {
+    width: 100vw;
+}
+
+.bg-custom {
+    background-color: #eeeedd;
+}
+
+.m0-auto {
+    margin: 0 auto;
+}
+
+.iconsCarrousel {
+    color: #000;
+    font-size: 3rem;
+}

@@ -1,0 +1,12 @@
+<p><small class="font-weight-bold">Hotel mas solicitado</small></p>
+<div class="border border-success" *ngIf="pieChartData.length != 0; else noData">
+    <div>
+        <div class="chart">
+            <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType" [options]="pieChartOptions" [colors]="pieChartColors" [legend]="pieChartLegend">
+        </canvas>
+        </div>
+    </div>
+</div>
+<ng-template #noData>
+    <p class="text-muted">No existen datos suficientes para generar grafica de pastel</p>
+</ng-template>

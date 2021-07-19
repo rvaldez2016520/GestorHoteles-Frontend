@@ -1,0 +1,54 @@
+<div class="main p-4">
+    <div class="container">
+        <div class="jumbotron jumbotron-fluid bg-primary text-light rounded p-4">
+            <div class="container">
+                <h1 class="display-4 font-weight-bolder">Facturas</h1>
+                <p *ngIf="role != 'ROLE_CLIENT'" class="lead">En esta sección puedes administrar todas las facturas del hotel <span class="font-weight-bolder">{{ hotel.name }}</span>.</p>
+            </div>
+        </div>
+        <div class="overflow-auto maxheight">
+            <div class="card invoices shadow-sm" *ngFor="let invoice of invoices">
+                <div class="card-body minheight">
+                    <p class="card-text"><strong>Inicio: </strong> {{ showDateInFormat(invoice.start_date) }}</p>
+                    <p class="card-text"><strong>Fin: </strong> {{ showDateInFormat(invoice.end_date) }}</p>
+                    <p class="card-text"><strong>Total: </strong> ${{ invoice.total_price }}</p>
+                    <a class="btn btn-primary mb-2" data-toggle="modal" data-target="#staticBackdrop" (click)="setInvoiceInfo(invoice)">Detalle Factura</a><br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Detalle Factura -->
+<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-pledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Información Detallada</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+
+                <p>ID: <strong>{{ invoice._id }}</strong> </p>
+                <br>
+                <p>Usuario: <strong>{{ user.username }}</strong> </p>
+                <br>
+                <p>Hotel: <strong>{{ hotel.name  }} </strong></p>
+                <br>
+                <p>Habitación: <strong> {{ room.name }} </strong> </p>
+                <br>
+                <p>Estadía: <strong> {{ showDateInFormat(invoice.start_date) }} - {{ showDateInFormat(invoice.end_date) }}</strong> </p>
+                <br>
+                <p>Total: <strong> ${{ invoice.total_price }} </strong> </p>
+                <br>
+                <p *ngIf="invoice.services.length != 0">Servicios:</p>
+                <p *ngFor="let service of services"><strong>{{ service.name }} | ${{ service.price_service }} </strong></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

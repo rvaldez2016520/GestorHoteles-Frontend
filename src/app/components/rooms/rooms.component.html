@@ -1,0 +1,118 @@
+<div class="main p-4">
+    <div class="container">
+        <div class="jumbotron jumbotron-fluid bg-warning text-light rounded p-4">
+            <div class="container">
+                <h1 class="display-4 font-weight-bolder">Habitaciones</h1>
+                <p class="lead">En esta sección puedes administrar todas las habitaciones del hotel <span class="font-weight-bolder">{{ hotel.name }}</span>.</p>
+                <button class="btn btn-lg btn-outline-light text-uppercase" data-toggle="modal" data-target="#createRoom" (click)="deleteInfo()">Crear Habitación</button>
+            </div>
+        </div>
+        <div class="overflow-auto maxheight">
+            <div class="card rooms shadow-sm" *ngFor="let room of rooms">
+                <div class="card-body minheight">
+                    <h5 class="card-title font-weight-bolder">{{ room.name }}</h5>
+                    <p class="card-text"><strong>Precio: </strong> ${{ room.price_for_day }}</p>
+                    <p class="card-text" *ngIf="room.available == true"><strong>Estado: </strong>Disponible</p>
+                    <p class="card-text" *ngIf="room.available == false"><strong>Estado: </strong>Disponible hasta {{ showDateInFormat(room.available_day) }}</p>
+                    <a class="btn btn-primary mb-2" data-toggle="modal" data-target="#staticBackdrop" (click)="setRoom(room)">Detalle Habitación</a><br>
+                    <a class="btn btn-danger" data-toggle="modal" data-target="#staticBackdropDelete" (click)="setRoom(room)">Eliminar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Detalle Habitación -->
+<div class="modal fade" id="staticBackdrop" tabindex="-1" aria-pledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Información Detallada</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+
+                <p>Hotel: <strong>{{ hotel.name }}</strong> </p>
+                <br>
+                <p>Nombre de habitación: <strong>{{ room.name }}</strong> </p>
+                <br>
+                <p>Precio por día: <strong>${{ room.price_for_day }} </strong></p>
+                <br>
+                <p *ngIf="room.available == true">Estado: <strong> Disponible </strong> </p>
+                <p *ngIf="room.available == false">Estado: <strong> Disponible hasta {{ showDateInFormat(room.available_day) }} </strong> </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Crear Habitación -->
+<div class="modal fade" id="createRoom" tabindex="-1" aria-pledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Crear una Habitación</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <form #saveRoomByAdminForm="ngForm" (ngSubmit)="onSubmit(saveRoomByAdminForm)">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputName">Nombre de Habitación</label>
+                            <input [(ngModel)]="room.name" name="name" type="text" class="form-control" id="inputName" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="inputPrice">Precio por día</label>
+                            <input [(ngModel)]="room.price_for_day" name="price" type="number" class="form-control" id="inputPrice" required>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label for="inputUserAdmin">Elige el tipo de Habitación</label>
+                        <select [(ngModel)]="room.typeRoom" name="typeRoom " id="inputTypeRoom " class="form-control " required>
+                            <option selected disabled>Elige un tipo de habitación...</option>
+                            <option *ngFor="let typeRoom of selectRoom" [value]="typeRoom">{{ typeRoom }}</option> 
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block" [disabled]="!saveRoomByAdminForm.form.valid">Crear</button><br>
+                    <button type="submit" class="btn btn-danger btn-block" data-dismiss="modal">Cancelar</button>
+                </form>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-secondary" data-dismiss="modal" (click)="ngOnInit()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Eliminar Habitación -->
+<div class="modal fade" id="staticBackdropDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">¿Estás seguro de eliminar esta habitación?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                <h3>Esta acción no se puede remover</h3>
+                <span>Ingresa tu contraseña para confirmar</span>
+                <form #formRemove="ngForm"></form>
+                <label for="passwordRemove"></label>
+                <input [(ngModel)]="confirmPassword" type="password" name="confirmPassword" id="passwordRemove" required>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning" (click)="removeRoom()" data-dismiss="modal" [disabled]="!formRemove.form.valid">I'm Sure</button>
+            </div>
+        </div>
+    </div>
+</div>
